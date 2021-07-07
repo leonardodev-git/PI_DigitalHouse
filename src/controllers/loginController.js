@@ -1,46 +1,46 @@
-//const modelsLogin = require('../modelsOld/Login')
-const { Clientes } = require('../models');
 const bcrypt = require('bcrypt');
-// const { userValidation } = require('../../modelsOld/Login');
-
-const index = (req, res) => {
-  res.render('login');
-}
-
-const loginUser = (dadosForm, req) => {
-  const { email, senha } = req.body
-  if (dadosForm === null) {
-    return { msg: "Email errado", status: false }
-  }
-
-  if (!bcrypt.compareSync(senha, dadosForm.senha)) {
-    return { msg: "Senha errada", status: false }
-  }
-  return {
-    status: true
-  }
-}
+const { validationResult } = require('express-validator');
+const search = require('../model/userModel')
+const config = require('../config/jwtConfig')
+const jwt = require('jsonwebtoken')
 
 const authUser = async (req, res) => {
-  // const user = modelsLogin.userValidation(req.body);
-  const usuarioValidation = await Clientes.findOne({
-    where: {
-      email: req.body.email
-    }
-  })
-  const user = loginUser(usuarioValidation, req);
-  if (user.status) {
-    delete usuarioValidation.senha
-    req.session.userSession = usuarioValidation;
-    return res.redirect('/dash')
+  const { email, senha } = req.body
+  const usuarioValidation = await search.searchUsers(email)
+
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ messenge: errors.errors })
   }
 
-  return res.render('login', { msg: user.msg });
+  if (!usuarioValidation) {
+    res.status(404).json({ messenge: "Email not found!" })
+  }
+
+  if (!bcrypt.compareSync(senha, usuarioValidation.senha)) {
+    return res.status(401).json({
+      acessToken: null,
+      messenge: "invalid password"
+    })
+  }
+
+  let token = jwt.sign({ id: usuarioValidation.id }, config.secret, {
+    expiresIn: 25000
+  });
 
 
+  return res.status(200).json({
+    message: "successfully connected",
+    user: usuarioValidation.nome + ' ' + usuarioValidation.sobrenome,
+    email: usuarioValidation.email,
+    acessToken: token
+  })
 }
 
+
+
+
 module.exports = {
-  index,
   authUser,
 };

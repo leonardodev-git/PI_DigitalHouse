@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Profissionais extends Model {
 
@@ -10,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Profissionais.hasMany(models.Servicos, { foreignKey: "profissional_ID" });
 
     }
-  };
+  }
   Profissionais.init({
     nome: DataTypes.STRING,
     sobrenome: DataTypes.STRING,

@@ -8,7 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Data_Horario: {
+      Start: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      End: {
         type: Sequelize.DATE
       },
       Valor_Total: {

@@ -1,5 +1,5 @@
 const { default: axios } = require('axios');
-const { Servico } = require('../models');
+const { Servico } = require('../bd_models');
 
 const teste = (req, res) => {
   const agendamento = [];
@@ -11,13 +11,11 @@ const teste = (req, res) => {
 const events = async (req, res) => {
   const { start, end } = req.body //como pegar esse cara
 
-  const createEvent = {
+  return {
     title,
     startt,
     endd,
   };
-
-  return createEvent;
 }
 
 

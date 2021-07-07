@@ -1,5 +1,4 @@
-const { Profissionais, Servicos } = require('../models');
-const treatData = require('./treatData')
+const { Profissionais, Servicos } = require('../bd_models');
 
 const listAll = () => Profissionais.findAll()
 
@@ -10,7 +9,6 @@ let getProfissional = (paramId) => {
         }, include: [{
             model: Servicos,
             attributes: ['nome']
-
         }]
     })
 }

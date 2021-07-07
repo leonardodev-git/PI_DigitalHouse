@@ -1,14 +1,14 @@
 //const listar = require('../../modelsOld/Dash');
-//const { Profissionais, Servicos } = require('../models');
-const professionalQuery = require('../db/professionalQuerys')
-const treatData = require('../db/treatData')
+//const { Profissionais, Servicos } = require('../bd_models');
+const professionalQuery = require('../model/professionalModel')
+const treatData = require('../model/treatData')
 
 
 const index = async (req, res) => {
 
-  listAll = await professionalQuery.listAll()
+  let listAll = await professionalQuery.listAll()
 
-  profissionais = treatData.listAllProfessional(listAll)
+  let profissionais = treatData.listAllProfessional(listAll)
 
   res.render('dash', { barbeiros: profissionais, userSession: req.session.userSession });
 }

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Servicos.hasMany(models.Agendamentos);
       Servicos.belongsTo(models.Profissionais, { foreignKey: 'Profissional_ID' });
     }
-  };
+  }
   Servicos.init({
     nome: DataTypes.STRING,
     preco: DataTypes.FLOAT

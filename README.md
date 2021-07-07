@@ -1,11 +1,26 @@
 
-# FullCalendar [![Build Status](https://travis-ci.com/fullcalendar/fullcalendar.svg?branch=master)](https://travis-ci.com/fullcalendar/fullcalendar)
 
-A full-sized drag & drop JavaScript event calendar
 
-- [Project website and demos](http://fullcalendar.io/)
-- [Documentation](http://fullcalendar.io/docs)
-- [Support](http://fullcalendar.io/support)
-- [Contributing](CONTRIBUTING.md)
-- [Changelog](CHANGELOG.md)
-- [License](LICENSE.txt)
+Create new user:
+
+    post http://localhost:5000/users {
+	"nome": "user",
+	"sobrenome": "user",
+	"email": "user@email.com",
+	"senha": "123456",	
+	"confirmarSenha": "123456"
+}
+
+Login:
+    post http://localhost:5000/login/ {
+	"email": "joao&maria@email.com",
+	"senha": "xxxxxxx"
+}
+
+Listar profissionais:
+	GET http://localhost:5000/profissionals/all/
+
+Detalhar profissional
+	GET http://localhost:5000/profissionals/:id
+
+
